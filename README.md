@@ -1,6 +1,6 @@
 # Isla - AI虚拟伴侣应用
 
-![Isla](app\src\main\res\drawable-hdpi\icon.png)
+![Isla](app/src/main/res/drawable-hdpi/icon.png)
 
 Isla是一款基于Android平台的AI虚拟伴侣应用，以动漫《可塑性记忆》中的角色艾拉为原型，结合了Qwen2.5 1.5B参数大型语言模型(LLM)、语音识别（Vosk）和E-mote技术，为用户提供沉浸式的虚拟交互体验。
 
@@ -72,6 +72,25 @@ Isla App (Android)
 2. 使用Android Studio打开项目
 3. 下载并配置必要的依赖库
 4. 构建并安装到设备
+
+### 模型配置
+为了使应用正常运行，需要下载以下模型文件到指定目录：
+
+1. **聊天模型** (Qwen2.5-1.5B)
+   - 下载地址：[https://huggingface.co/litert-community/Qwen2.5-1.5B-Instruct/tree/main](https://huggingface.co/litert-community/Qwen2.5-1.5B-Instruct/tree/main)
+   - 选择q8量化版本
+   - 下载后放置到目录：`app/src/main/assets/chat_model/`
+
+2. **语音识别模型** (Vosk)
+   - 下载地址：[https://alphacephei.com/vosk/models](https://alphacephei.com/vosk/models)
+   - 选择对应识别语言的模型
+   - 下载后解压到目录：`models/src/main/assets/vosk_model/`
+
+3. **CrosswalkNative AAR文件**
+   - 下载地址：
+     - [xwalk_main_fat-77.2.aar](https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.2.aar)
+     - [xwalk_main_fat-77.3.aar](https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.3.aar)
+   - 下载后放置到目录：`app/libs/`
 
 ### 权限说明
 应用需要以下权限：
