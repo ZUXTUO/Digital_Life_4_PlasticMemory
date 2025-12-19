@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Chat Isla</string>
+    <string name="recognize_file">识别文件</string>
+    <string name="recognize_microphone">识别麦克风</string>
+    <string name="stop_microphone">停止麦克风</string>
+    <string name="preparing">正在准备识别器\n</string>
+    <string name="ready">已就绪\n</string>
+    <string name="failed">识别器初始化失败 %s\n</string>
+    <string name="starting">正在启动\n</string>
+    <string name="say_something">请说话\n</string>
+    <string name="stop_file">停止文件</string>
+    <string name="pause">暂停</string>
+    <string name="continueRecognition">继续</string>
+
+    <!-- 新增日志相关的字符串 -->
+    <string name="log_button_description">查看日志</string>
+    <string name="log_activity_title">应用日志</string>
+    <string name="log_loading_message">正在加载日志...</string>
+    <string name="log_empty_message">日志文件为空或不存在。</string>
+    <string name="log_error_reading">读取日志文件失败: %s</string>
+
+</resources>

@@ -1,0 +1,74 @@
+{
+	"Phiz": [{
+			"phiz_name": "高兴",
+			"phiz_anime_name": [
+				"表情_笑顔",
+				"motion_喜03",
+				"motion_喜04",
+				"motion_楽00",
+				"motion_楽01",
+				"motion_楽02",
+				"motion_楽03",
+				"motion_楽05"
+			]
+		},
+		{
+			"phiz_name": "伤心",
+			"phiz_anime_name": [
+				"表情_悲しみ",
+				"表情_泣き",
+				"motion_哀00",
+				"motion_哀01",
+				"motion_哀04"
+			]
+		},
+		{
+			"phiz_name": "愤怒",
+			"phiz_anime_name": [
+				"motion_怒00",
+				"motion_怒01",
+				"motion_怒02"
+			]
+		},
+		{
+			"phiz_name": "惊讶",
+			"phiz_anime_name": [
+				"表情_ショック",
+				"motion_驚00",
+				"motion_驚02",
+				"motion_驚03"
+			]
+		},
+		{
+			"phiz_name": "困惑",
+			"phiz_anime_name": [
+				"表情_困惑"
+			]
+		},
+		{
+			"phiz_name": "认真",
+			"phiz_anime_name": [
+				"表情_真剣"
+			]
+		},
+		{
+			"phiz_name": "其他",
+			"phiz_anime_name": [
+				"表情_ドヤ顔",
+				"motion_04うっとり"
+			]
+		},
+		{
+			"phiz_name": "普通",
+			"phiz_anime_name": [
+				"表情_通常"
+			]
+		},
+		{
+			"phiz_name": "害羞",
+			"phiz_anime_name": [
+				"表情_照れ"
+			]
+		}
+	]
+}

@@ -1,0 +1,4 @@
+https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.2.aar
+https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.3.aar
+
+下载到这个文件夹里
