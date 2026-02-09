@@ -5,7 +5,6 @@ android {
     compileSdk 36
     defaultConfig {
         minSdkVersion 27
-        targetSdk 36
     }
     buildFeatures {
         buildConfig = false
@@ -16,6 +15,12 @@ android {
         }
     }
     compileSdkMinor 1
+    lint {
+        targetSdk 36
+    }
+    testOptions {
+        targetSdk 36
+    }
 }
 
 tasks.register('genUUID') {

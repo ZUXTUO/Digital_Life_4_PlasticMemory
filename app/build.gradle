@@ -26,16 +26,15 @@ android {
         buildConfig = true
     }
     
-    // 防止ICU数据文件被压缩，解决XWalk崩溃问题
-    aaptOptions {
-        noCompress "dat", "bin", "pak"
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
     compileSdkMinor 1
-    
+    androidResources {
+        noCompress 'dat', 'bin', 'pak'
+    }
+
     // 解决 Kotlin 标准库版本冲突
     configurations.all {
         resolutionStrategy {
@@ -53,7 +52,7 @@ dependencies {
     implementation 'com.alphacephei:vosk-android:0.3.75@aar'
     implementation project(':models')
 
-    implementation 'com.google.mediapipe:tasks-genai:0.10.29'
+    implementation 'com.google.mediapipe:tasks-genai:0.10.32'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 直接引用 AAR 文件，避免使用 flatDir

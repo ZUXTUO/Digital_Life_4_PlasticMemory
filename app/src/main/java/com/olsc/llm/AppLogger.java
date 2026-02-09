@@ -1,5 +1,6 @@
 package com.olsc.llm;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ public class AppLogger {
     public static final String LOG_FILE_NAME = "app_logs.txt";
     private static Context applicationContext;
     // 日期格式，用于日志时间戳
+    @SuppressLint("ConstantLocale")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 
     /**

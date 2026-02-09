@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -84,7 +83,7 @@ public class MainActivity extends Activity implements RecognitionListener {
 
     // 流式响应相关变量
     private TextView currentStreamingTextView = null; // 当前正在流式更新的TextView
-    private StringBuilder currentStreamingContent = new StringBuilder(); // 当前流式内容缓存
+    private final StringBuilder currentStreamingContent = new StringBuilder(); // 当前流式内容缓存
     private String currentUserInputForMemory = ""; // 当前用户输入，用于记忆存储
 
     // 数据存储
@@ -102,15 +101,15 @@ public class MainActivity extends Activity implements RecognitionListener {
 
     // 预加载配置和知识库
     private String personaContext = "";
-    private List<KnowledgeEntry> knowledgeBase = new ArrayList<>();
-    private List<BadDataEntry> badDataList = new ArrayList<>(); // 新增：不良数据列表
-    private Random random = new Random();
+    private final List<KnowledgeEntry> knowledgeBase = new ArrayList<>();
+    private final List<BadDataEntry> badDataList = new ArrayList<>(); // 新增：不良数据列表
+    private final Random random = new Random();
 
     // ===================================================================================
     // 记忆系统 (核心 & 长期)
     // ===================================================================================
-    private List<CoreMemoryEntry> coreMemories = new ArrayList<>();
-    private List<LongTermMemoryEntry> longTermMemories = new ArrayList<>();
+    private final List<CoreMemoryEntry> coreMemories = new ArrayList<>();
+    private final List<LongTermMemoryEntry> longTermMemories = new ArrayList<>();
     private static final String CORE_MEMORY_FILE = "core_memory.json";
     private static final String LONG_TERM_MEMORY_FILE = "long_term_memory.json"; // 长期记忆使用单个文件
     private static final double CORE_MEMORY_SIMILARITY_THRESHOLD = 0.5;
@@ -149,16 +148,16 @@ public class MainActivity extends Activity implements RecognitionListener {
         // 检查并请求麦克风权限
         checkPermissions();
 
-        showLongToast("此为Olsc的免费项目，且无广告，谨防上当受骗", 10);
-        showLongToast("可前往BiliBili搜索Olsc，感谢关注!", 10);
+        showLongToast("此为Olsc的免费项目，且无广告，谨防上当受骗");
+        showLongToast("可前往BiliBili搜索Olsc，感谢关注!");
     }
 
-    private void showLongToast(String message, int durationInSeconds) {
+    private void showLongToast(String message) {
         final Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         final int delay = 2000;
 
         new Thread(() -> {
-            int repeat = durationInSeconds * 1000 / delay;
+            int repeat = 10 * 1000 / delay;
             for (int i = 0; i < repeat; i++) {
                 runOnUiThread(toast::show);
                 try {
@@ -479,6 +478,7 @@ public class MainActivity extends Activity implements RecognitionListener {
      * @param userMessage 用户消息
      * @param aiMessage   AI回复
      */
+    @SuppressLint("DefaultLocale")
     private void addLongTermMemory(String userMessage, String aiMessage) {
         new Thread(() -> {
             try {
@@ -1017,7 +1017,7 @@ public class MainActivity extends Activity implements RecognitionListener {
 
         // 检查是否包含过多的重复字符（可能是乱码）
         String cleaned = content.replaceAll("\\s", "");
-        if (cleaned.length() > 0) {
+        if (!cleaned.isEmpty()) {
             char firstChar = cleaned.charAt(0);
             int sameCharCount = 0;
             for (char c : cleaned.toCharArray()) {
@@ -1038,11 +1038,7 @@ public class MainActivity extends Activity implements RecognitionListener {
                 .count();
 
         // 如果特殊字符超过50%，可能是乱码
-        if ((double) specialCharCount / content.length() > 0.5) {
-            return false;
-        }
-
-        return true;
+        return !((double) specialCharCount / content.length() > 0.5);
     }
 
     /**
@@ -1092,6 +1088,7 @@ public class MainActivity extends Activity implements RecognitionListener {
     /**
      * 手动触发记忆清理
      */
+    @SuppressLint("DefaultLocale")
     public void manualMemoryCleanup() {
         new Thread(() -> {
             try {
@@ -1121,12 +1118,11 @@ public class MainActivity extends Activity implements RecognitionListener {
     /**
      * 【新】增强的记忆匹配检测
      *
-     * @param userInput           用户输入
-     * @param memoryContent       记忆内容
-     * @param similarityThreshold 相似度阈值
+     * @param userInput     用户输入
+     * @param memoryContent 记忆内容
      * @return 如果匹配则为true
      */
-    private boolean isMemoryMatch(String userInput, String memoryContent, double similarityThreshold) {
+    private boolean isMemoryMatch(String userInput, String memoryContent) {
         if (userInput == null || userInput.isEmpty() || memoryContent == null || memoryContent.isEmpty()) {
             return false;
         }
@@ -1139,7 +1135,7 @@ public class MainActivity extends Activity implements RecognitionListener {
         }
 
         // 检查相似度 (模糊匹配)
-        return calculateSimilarity(userInput, memoryContent) >= similarityThreshold;
+        return calculateSimilarity(userInput, memoryContent) >= MainActivity.CORE_MEMORY_SIMILARITY_THRESHOLD;
     }
 
 
@@ -1157,7 +1153,7 @@ public class MainActivity extends Activity implements RecognitionListener {
         StringBuilder foundMemories = new StringBuilder();
         for (CoreMemoryEntry entry : coreMemories) {
             // 使用增强的匹配逻辑
-            if (isMemoryMatch(userInput, entry.text, CORE_MEMORY_SIMILARITY_THRESHOLD)) {
+            if (isMemoryMatch(userInput, entry.text)) {
                 AppLogger.logD(TAG, "核心记忆匹配: " + entry.text); // 使用 AppLogger
                 foundMemories.append("- ").append(entry.text).append("\n");
             }
@@ -1177,6 +1173,7 @@ public class MainActivity extends Activity implements RecognitionListener {
      * @param userInput 用户输入
      * @return 格式化的相关记忆字符串，若无则为空
      */
+    @SuppressLint("DefaultLocale")
     private String findLongTermMemories(String userInput) {
         if (longTermMemories.isEmpty()) {
             return "";
@@ -1311,7 +1308,7 @@ public class MainActivity extends Activity implements RecognitionListener {
     private void initLlmModel() {
         new Thread(() -> {
             try {
-                String modelPath = copyModelFromAssets("chat_model/chat.litertlm", "chat.litertlm");
+                String modelPath = copyModelFromAssets("chat_model/chat.task", "chat.task");
                 if (modelPath == null) {
                     runOnUiThread(() -> showError("AI模型复制失败，请检查assets文件夹。"));
                     return;

@@ -1,11 +1,13 @@
 package com.olsc.llm;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import org.chromium.base.ApplicationStatus;
 import org.xwalk.core.XWalkApplication;
 
 public class App extends XWalkApplication {
+    @SuppressLint("StaticFieldLeak")
     private static Context mContext;
 
     @Override

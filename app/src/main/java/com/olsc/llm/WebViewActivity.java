@@ -1,5 +1,6 @@
 package com.olsc.llm;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -20,7 +21,6 @@ public class WebViewActivity extends AppCompatActivity implements XWalkInitializ
 
     private static final String TAG = "WebViewActivity";
     private XWalkView mXWalkView;
-    private XWalkInitializer mXWalkInitializer;
     private FrameLayout parent;
 
     @Override
@@ -29,7 +29,7 @@ public class WebViewActivity extends AppCompatActivity implements XWalkInitializ
         setContentView(R.layout.activity_web_view);
         
         try {
-            mXWalkInitializer = new XWalkInitializer(this, this);
+            XWalkInitializer mXWalkInitializer = new XWalkInitializer(this, this);
             mXWalkInitializer.initAsync();
         } catch (Exception e) {
             Log.e(TAG, "Failed to initialize XWalk: " + e.getMessage());
@@ -39,6 +39,7 @@ public class WebViewActivity extends AppCompatActivity implements XWalkInitializ
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void init() {
         try {
             mXWalkView.setUIClient(new WebUIClient(mXWalkView));
@@ -54,6 +55,7 @@ public class WebViewActivity extends AppCompatActivity implements XWalkInitializ
         }
     }
 
+    @SuppressLint("GestureBackNavigation")
     @Override
     public void onBackPressed() {
         parent = findViewById(R.id.web_parent);
@@ -136,13 +138,13 @@ public class WebViewActivity extends AppCompatActivity implements XWalkInitializ
 
 
 
-    private class WebXWalkClient extends XWalkClient {
+    private static class WebXWalkClient extends XWalkClient {
         public WebXWalkClient(XWalkView view) {
             super(view);
         }
     }
 
-    private class WebUIClient extends XWalkUIClient {
+    private static class WebUIClient extends XWalkUIClient {
         public WebUIClient(XWalkView view) {
             super(view);
         }

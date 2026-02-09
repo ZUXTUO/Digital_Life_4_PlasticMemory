@@ -8,3 +8,8 @@
 *.md5
 *.lst
 *.iml
+app/src/main/assets/chat_model/chat.task
+app/libs/xwalk_main_fat-77.2.aar
+app/libs/xwalk_main_fat-77.3.aar
+.gitignore
+models/src/main/assets/vosk_model
