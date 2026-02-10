@@ -1,2 +1,0 @@
-https://alphacephei.com/vosk/models
-选择对应识别语言的模型解压到这里面

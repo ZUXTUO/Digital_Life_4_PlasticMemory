@@ -10,6 +10,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -132,6 +136,21 @@ public class MainActivity extends Activity implements RecognitionListener {
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+
+        // 沉浸式状态栏与刘海屏适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(lp);
+        }
+
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(Color.TRANSPARENT);
+
         setContentView(R.layout.main);
 
         // 初始化 AppLogger
@@ -1891,6 +1910,7 @@ public class MainActivity extends Activity implements RecognitionListener {
 
                     lastMessageTextView.setText(response);
                     lastMessageTextView.setBackgroundResource(R.drawable.bubble_ai);
+                    lastMessageTextView.setTextColor(Color.WHITE);
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) lastMessageLayout.getLayoutParams();
                     params.gravity = Gravity.START;
                     params.setMargins(0, dpToPx(8), dpToPx(60), 0);
@@ -1939,7 +1959,7 @@ public class MainActivity extends Activity implements RecognitionListener {
         TextView messageTextView = new TextView(this);
         messageTextView.setText(""); // 开始时为空
         messageTextView.setTextSize(16);
-        messageTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+        messageTextView.setTextColor(Color.WHITE);
         messageTextView.setBackgroundResource(R.drawable.bubble_ai);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -2119,7 +2139,6 @@ public class MainActivity extends Activity implements RecognitionListener {
         TextView messageTextView = new TextView(this);
         messageTextView.setText(message);
         messageTextView.setTextSize(16);
-        messageTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -2127,10 +2146,12 @@ public class MainActivity extends Activity implements RecognitionListener {
         );
 
         if (isUser) {
+            messageTextView.setTextColor(Color.parseColor("#333333"));
             messageTextView.setBackgroundResource(R.drawable.bubble_user);
             params.gravity = Gravity.END;
             params.setMargins(dpToPx(60), dpToPx(8), 0, 0);
         } else {
+            messageTextView.setTextColor(Color.WHITE);
             messageTextView.setBackgroundResource(R.drawable.bubble_ai);
             params.gravity = Gravity.START;
             params.setMargins(0, dpToPx(8), dpToPx(60), 0);

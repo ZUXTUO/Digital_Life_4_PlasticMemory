@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <!-- 对话内容显示区域，现在包含一个LinearLayout来动态添加消息气泡 -->
@@ -14,7 +14,9 @@
         android:layout_above="@+id/bottom_bar"
         android:clipToPadding="false"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"
+        android:overScrollMode="ifContentScrolls">
 
         <LinearLayout
             android:id="@+id/chat_messages_container"
@@ -22,7 +24,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp" />
 
     </ScrollView>
 
@@ -32,15 +35,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        android:elevation="8dp"
+        android:background="#FFFFFFFF"
+        android:elevation="12dp"
         android:gravity="center_vertical"
         android:minHeight="60dp"
         android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="8dp">
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
 
         <!-- 文本输入框 -->
         <EditText
@@ -48,28 +51,30 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="输入消息..."
-            android:inputType="textMultiLine"
-            android:maxLines="5"
-            android:paddingStart="16dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="10dp"
+            android:hint="输入消息与Isla对话..."
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="4"
+            android:paddingStart="18dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="12dp"
             android:textColor="#333333"
             android:textColorHint="#999999"
             android:textSize="16sp"
-            android:background="@drawable/edit_text_background" /> <!-- 添加背景 -->
+            android:background="@drawable/edit_text_background"
+            android:imeOptions="actionSend" />
 
         <!-- 录音按钮 -->
         <ImageButton
             android:id="@+id/record_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="开始录音"
-            android:scaleType="centerInside"
-            android:src="@android:drawable/ic_btn_speak_now"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_mic_premium"
             android:visibility="visible" />
 
         <!-- 发送按钮 -->
@@ -77,11 +82,12 @@
             android:id="@+id/send_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="发送消息"
-            android:scaleType="centerInside"
-            android:src="@android:drawable/ic_menu_send"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_send_premium"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -93,15 +99,15 @@
         android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_above="@id/bottom_bar"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="90dp"
         android:background="@drawable/float_button_background"
-        android:src="@android:drawable/ic_menu_info_details"
+        android:src="@drawable/ic_log_premium"
         android:contentDescription="@string/log_button_description"
-        android:elevation="6dp"
+        android:elevation="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:padding="12dp"
+        android:padding="14dp"
         android:scaleType="fitCenter" />
 
     <!-- 悬浮网页按钮 -->
@@ -111,15 +117,15 @@
         android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_above="@id/bottom_bar"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/float_button_background"
-        android:src="@android:drawable/ic_menu_view"
+        android:src="@drawable/ic_web_premium"
         android:contentDescription="网页页面"
-        android:elevation="6dp"
+        android:elevation="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:padding="12dp"
+        android:padding="14dp"
         android:scaleType="fitCenter" />
 
 </RelativeLayout>

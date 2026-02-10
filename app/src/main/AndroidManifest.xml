@@ -18,7 +18,8 @@
         tools:targetApi="s">
         <activity
             android:name="MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize"
             android:label="@null"
             android:exported="true">
             <intent-filter>
@@ -26,13 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 声明新的 LogDisplayActivity -->
         <activity android:name=".LogDisplayActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppTheme"
             android:label="@string/log_activity_title" />
-        <!-- 声明新的 WebViewActivity -->
         <activity android:name=".WebViewActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppTheme"
             android:label="网页页面" />
     </application>
 </manifest>
