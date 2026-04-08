@@ -9,6 +9,7 @@
 *.lst
 *.iml
 app/src/main/assets/chat_model/chat.task
+app/src/main/assets/chat_model/chat.litertlm
 app/libs/xwalk_main_fat-77.2.aar
 app/libs/xwalk_main_fat-77.3.aar
 .gitignore
