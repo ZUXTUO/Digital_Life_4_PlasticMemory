@@ -60,7 +60,7 @@ import java.util.TimerTask;
 public class MainActivity extends Activity implements RecognitionListener {
 
     // 将 TAG 改为中文，并使用 AppLogger
-    private static final String TAG = "Chat Isla 日志";
+    private static final String TAG = "Isla 日志";
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private static final int MAX_USER_INPUT_LENGTH = 8192; // 最大用户输入长度
 
@@ -220,6 +220,15 @@ public class MainActivity extends Activity implements RecognitionListener {
         // 设置悬浮按钮点击事件
         logFloatButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LogDisplayActivity.class)));
         webFloatButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, WebViewActivity.class)));
+
+        View topLogBtn = findViewById(R.id.top_log_button);
+        if (topLogBtn != null) {
+            topLogBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LogDisplayActivity.class)));
+        }
+        View topWebBtn = findViewById(R.id.top_web_button);
+        if (topWebBtn != null) {
+            topWebBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, WebViewActivity.class)));
+        }
 
         userInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1900,24 +1909,11 @@ public class MainActivity extends Activity implements RecognitionListener {
         // 替换"正在思考"的消息
         if (chatMessagesContainer.getChildCount() > 0) {
             View lastChild = chatMessagesContainer.getChildAt(chatMessagesContainer.getChildCount() - 1);
-            if (lastChild instanceof LinearLayout) {
-                LinearLayout lastMessageLayout = (LinearLayout) lastChild;
-                TextView lastMessageTextView = (TextView) lastMessageLayout.getChildAt(0);
-                if (lastMessageTextView != null && lastMessageTextView.getText().toString().equals("[艾拉正在思考...]")) {
-
-                    // 清空输入框
-                    userInputEditText.setText("");
-
-                    lastMessageTextView.setText(response);
-                    lastMessageTextView.setBackgroundResource(R.drawable.bubble_ai);
-                    lastMessageTextView.setTextColor(Color.WHITE);
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) lastMessageLayout.getLayoutParams();
-                    params.gravity = Gravity.START;
-                    params.setMargins(0, dpToPx(8), dpToPx(60), 0);
-                    lastMessageLayout.setLayoutParams(params);
-                } else {
-                    addMessageToChat(response, false);
-                }
+            TextView lastMessageTextView = lastChild != null ? lastChild.findViewById(R.id.ai_message_text) : null;
+            if (lastMessageTextView != null && lastMessageTextView.getText().toString().equals("[艾拉正在思考...]")) {
+                // 清空输入框
+                userInputEditText.setText("");
+                lastMessageTextView.setText(response);
             } else {
                 addMessageToChat(response, false);
             }
@@ -1952,27 +1948,11 @@ public class MainActivity extends Activity implements RecognitionListener {
         // 清空之前的流式内容
         currentStreamingContent.setLength(0);
 
-        // 创建一个新的AI消息框
-        LinearLayout messageLayout = new LinearLayout(this);
-        messageLayout.setOrientation(LinearLayout.VERTICAL);
-
-        TextView messageTextView = new TextView(this);
+        View messageItem = getLayoutInflater().inflate(R.layout.item_chat_ai, chatMessagesContainer, false);
+        TextView messageTextView = messageItem.findViewById(R.id.ai_message_text);
         messageTextView.setText(""); // 开始时为空
-        messageTextView.setTextSize(16);
-        messageTextView.setTextColor(Color.WHITE);
-        messageTextView.setBackgroundResource(R.drawable.bubble_ai);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.gravity = Gravity.START;
-        params.setMargins(0, dpToPx(8), dpToPx(60), 0);
-        messageTextView.setLayoutParams(params);
-        messageTextView.setPadding(dpToPx(12), dpToPx(8), dpToPx(12), dpToPx(8));
-
-        messageLayout.addView(messageTextView);
-        chatMessagesContainer.addView(messageLayout);
+        chatMessagesContainer.addView(messageItem);
 
         // 保存当前流式更新的TextView引用
         currentStreamingTextView = messageTextView;
@@ -2133,35 +2113,18 @@ public class MainActivity extends Activity implements RecognitionListener {
     // ===================================================================================
 
     private void addMessageToChat(String message, boolean isUser) {
-        LinearLayout messageLayout = new LinearLayout(this);
-        messageLayout.setOrientation(LinearLayout.VERTICAL);
-
-        TextView messageTextView = new TextView(this);
-        messageTextView.setText(message);
-        messageTextView.setTextSize(16);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-
+        View messageItem;
         if (isUser) {
-            messageTextView.setTextColor(Color.parseColor("#333333"));
-            messageTextView.setBackgroundResource(R.drawable.bubble_user);
-            params.gravity = Gravity.END;
-            params.setMargins(dpToPx(60), dpToPx(8), 0, 0);
+            messageItem = getLayoutInflater().inflate(R.layout.item_chat_user, chatMessagesContainer, false);
+            TextView messageTextView = messageItem.findViewById(R.id.user_message_text);
+            messageTextView.setText(message);
         } else {
-            messageTextView.setTextColor(Color.WHITE);
-            messageTextView.setBackgroundResource(R.drawable.bubble_ai);
-            params.gravity = Gravity.START;
-            params.setMargins(0, dpToPx(8), dpToPx(60), 0);
+            messageItem = getLayoutInflater().inflate(R.layout.item_chat_ai, chatMessagesContainer, false);
+            TextView messageTextView = messageItem.findViewById(R.id.ai_message_text);
+            messageTextView.setText(message);
         }
-        messageTextView.setLayoutParams(params);
-        messageTextView.setPadding(dpToPx(12), dpToPx(8), dpToPx(12), dpToPx(8));
 
-        messageLayout.addView(messageTextView);
-        chatMessagesContainer.addView(messageLayout);
-
+        chatMessagesContainer.addView(messageItem);
         scrollToBottom();
     }
 

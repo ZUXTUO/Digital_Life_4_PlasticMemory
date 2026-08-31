@@ -29,6 +29,11 @@ public class LogDisplayActivity extends Activity {
         logContentTextView = findViewById(R.id.log_content_text_view);
         logScrollView = findViewById(R.id.log_scroll_view);
 
+        android.view.View backBtn = findViewById(R.id.btn_log_back);
+        if (backBtn != null) {
+            backBtn.setOnClickListener(v -> finish());
+        }
+
         // 加载并显示日志内容
         loadLogsAndDisplay();
     }

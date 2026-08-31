@@ -57,9 +57,10 @@ Isla App (Android)
 ├── LLM推理引擎 (MediaPipe)
 ├── 语音识别 (Vosk)
 ├── Web服务器 (NanoHTTPD)
-├── E-mote引擎 (CrosswalkNative)
+├── E-mote引擎 (GeckoView - 火狐内核)
 └── 数据存储 (本地文件系统)
 ```
+
 
 ## 安装与运行
 
@@ -86,11 +87,8 @@ Isla App (Android)
    - 选择对应识别语言的模型
    - 下载后解压到目录：`models/src/main/assets/vosk_model/`
 
-3. **CrosswalkNative AAR文件**
-   - 下载地址：
-     - [xwalk_main_fat-77.2.aar](https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.2.aar)
-     - [xwalk_main_fat-77.3.aar](https://github.com/ks32/CrosswalkNative/blob/master/app/libs/xwalk_main_fat-77.3.aar)
-   - 下载后放置到目录：`app/libs/`
+3. **浏览器内核 (GeckoView)**
+   - 项目已自动通过 Mozilla 官方 Maven 仓库拉取 `org.mozilla.geckoview:geckoview` 依赖，无需手动下载 Crosswalk AAR 文件。
 
 ### 权限说明
 应用需要以下权限：

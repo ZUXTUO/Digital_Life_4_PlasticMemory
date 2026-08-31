@@ -3,10 +3,9 @@ package com.olsc.llm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import org.chromium.base.ApplicationStatus;
-import org.xwalk.core.XWalkApplication;
+import android.app.Application;
 
-public class App extends XWalkApplication {
+public class App extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
 
@@ -18,7 +17,6 @@ public class App extends XWalkApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ApplicationStatus.initialize(this);
         
         // 启动Web服务器
         WebServerService.startServer();

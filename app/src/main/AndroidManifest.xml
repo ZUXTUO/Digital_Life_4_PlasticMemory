@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="s">
         <activity
-            android:name="MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"
             android:label="@null"
